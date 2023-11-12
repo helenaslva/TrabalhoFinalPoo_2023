@@ -12,6 +12,11 @@ import java.util.Date;
  * @author helenas
  */
 public abstract class Lancamento {
+
+    public Lancamento(double valor, LocalDate data) {
+        this.valor = valor;
+        this.data = data;
+    }
     private double valor;
 
     public double getValor() {
@@ -19,7 +24,12 @@ public abstract class Lancamento {
     }
 
     public void setValor(double valor) {
-        this.valor = valor;
+        if(valor <= 0){
+            throw new IllegalArgumentException("O valor não pode ser negativo");
+        }else{
+            this.valor = valor;
+        }
+        
     }
 
     public LocalDate getData() {
