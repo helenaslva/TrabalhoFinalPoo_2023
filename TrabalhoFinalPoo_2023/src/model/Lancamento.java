@@ -40,4 +40,8 @@ public abstract class Lancamento {
         this.data = data;
     }
     private LocalDate data;
+    
+    public abstract String getTipo();
+    public abstract String getTipoLancamento();
+
 }

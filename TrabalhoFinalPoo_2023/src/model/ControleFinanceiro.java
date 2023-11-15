@@ -4,6 +4,11 @@
  */
 package model;
 
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -12,11 +17,14 @@ import java.util.ArrayList;
  * @author helenas
  */
 public class ControleFinanceiro {
-    private String titular;
-    private double saldo; 
-    private ArrayList<Lancamento> lancamentos; 
 
-   
+    public ControleFinanceiro(String titular) {
+        this.titular = titular;
+    }
+
+    private String titular;
+    private double saldo;
+    private ArrayList<Lancamento> lancamentos = new ArrayList();
 
     public String getTitular() {
         return titular;
@@ -33,50 +41,64 @@ public class ControleFinanceiro {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
-    
-    public void inlcuirReceita(Lancamento receita){
-        if(receita instanceof Receita){
+
+    public void inlcuirReceita(Lancamento receita) throws FileNotFoundException, IOException {
+        if (receita instanceof Receita) {
             this.lancamentos.add(receita);
-            if(receita.getData().isAfter(LocalDate.now())){
+            if (receita.getData().isBefore(LocalDate.now())) {
                 this.setSaldo(this.getSaldo() + receita.getValor());
             }
-        }else{
+           // atualizarArquivoCSV();
+        } else {
             throw new IllegalArgumentException("O lançamento não é uma receita");
         }
     }
-    
-    public void incluirDespesa(Lancamento despesa){
-        if(despesa instanceof Despesa){
+
+    public void incluirDespesa(Lancamento despesa) throws IOException {
+        if (despesa instanceof Despesa) {
+           
             this.lancamentos.add(despesa);
-            if(despesa.getData().isAfter(LocalDate.now())){
-                  this.setSaldo(this.getSaldo() - despesa.getValor());
+            if (despesa.getData().isBefore(LocalDate.now())) {
+                this.setSaldo(this.getSaldo() - despesa.getValor());
             }
-        }else{
+            // atualizarArquivoCSV();
+        } else {
             throw new IllegalArgumentException("O lançamento não é uma despesa");
         }
     }
-    
-    public ArrayList<Lancamento> listarReceitas(){
+
+    public ArrayList<Lancamento> listarReceitas() {
         ArrayList<Lancamento> receitas = new ArrayList();
-        for(Lancamento l: lancamentos){
-            if(l instanceof Receita){
+        for (Lancamento l : lancamentos) {
+            if (l instanceof Receita) {
                 receitas.add(l);
             }
         }
         return receitas;
     }
-    
-    public ArrayList<Lancamento> listarDespesas(){
+
+    public ArrayList<Lancamento> listarDespesas() {
         ArrayList<Lancamento> despesas = new ArrayList();
-        for(Lancamento l: lancamentos){
-            if(l instanceof Despesa){
+        for (Lancamento l : lancamentos) {
+            if (l instanceof Despesa) {
                 despesas.add(l);
             }
         }
         return despesas;
     }
-    
-     public ArrayList<Lancamento> getLancamentos() {
-        return lancamentos;
-    }
+
+   /* public void atualizarArquivoCSV() throws FileNotFoundException, IOException {
+        try (PrintWriter write = new PrintWriter(new FileWriter("C:\\Users\\helenas\\Downloads\\teste.csv"), true)) {
+            for(Lancamento l: lancamentos){
+                  String linha =l.getTipoLancamento() + "," + l.getData() + "," + l.getValor() + "," + l.getTipo();
+                  write.println(linha);
+       
+          
+            }
+          
+           
+        }
+
+    }*/
 }
+

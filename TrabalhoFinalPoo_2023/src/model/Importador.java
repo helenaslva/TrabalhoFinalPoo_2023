@@ -6,6 +6,9 @@ package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 /**
@@ -14,21 +17,31 @@ import java.util.Scanner;
  */
 public class Importador {
     
-     private Lancamento lancamento; 
-    public Importador(Lancamento pais) {
-        this.lancamento = lancamento; 
+     private ControleFinanceiro controleFinanceiro; 
+    public Importador(ControleFinanceiro controleFinanceiro) {
+        this.controleFinanceiro = controleFinanceiro; 
     }
     
-    public void carregarArquivo(File arquivo) throws FileNotFoundException{
+    public void carregarArquivo(File arquivo) throws FileNotFoundException, IOException{
         try(Scanner sc = new Scanner(arquivo, "UTF-8")){  
           
             while(sc.hasNextLine()){
                 String linha = sc.nextLine();
-                String[] dados = linha.split(";");
+                String[] dados = linha.split(",");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                
+                if(dados[0].equals("Despesa")){
+                    Despesa novaDespesa = new Despesa(Double.parseDouble(dados[2]), LocalDate.parse(dados[1], formatter), TipoDespesa.valueOf(dados[3]));
+                    controleFinanceiro.incluirDespesa(novaDespesa);
+                }else if(dados[0].equals("Receita")){
+                    Receita novaReceita =  new Receita(Double.parseDouble(dados[2]), LocalDate.parse(dados[1], formatter), TipoReceita.valueOf(dados[3]));
+                    controleFinanceiro.inlcuirReceita(novaReceita);
+                }
                 
                 
             }
         }
     }
+    
     
 }

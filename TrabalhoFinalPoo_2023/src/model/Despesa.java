@@ -13,8 +13,29 @@ import java.time.LocalDate;
 public class Despesa extends Lancamento {
     TipoDespesa tipoDespesa; 
 
+    public TipoDespesa getTipoDespesa() {
+        return tipoDespesa;
+    }
+
+    public void setTipoDespesa(TipoDespesa tipoDespesa) {
+        this.tipoDespesa = tipoDespesa;
+    }
+
     public Despesa(double valor, LocalDate data, TipoDespesa tipoDespesa) {
         super(valor, data);
         this.tipoDespesa = tipoDespesa; 
     }
+
+    @Override
+    public String getTipo() {
+        return this.getTipoDespesa().toString();
+    }
+
+    @Override
+    public String getTipoLancamento() {
+        return "Despesa";
+    }
+
+ 
+    
 }
