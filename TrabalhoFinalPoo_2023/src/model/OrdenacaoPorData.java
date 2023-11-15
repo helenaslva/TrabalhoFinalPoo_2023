@@ -5,10 +5,17 @@
  */
 package model;
 
+import java.util.Comparator;
+
 /**
  *
  * @author helenas
  */
-public class OrdenacaoPorData {
+public class OrdenacaoPorData implements Comparator<Lancamento> {
+
+    @Override
+    public int compare(Lancamento l1, Lancamento l2) {
+      return l1.getData().compareTo(l2.getData());
+    }
     
 }
