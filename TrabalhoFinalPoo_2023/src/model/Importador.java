@@ -4,10 +4,31 @@
  */
 package model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 /**
  *
  * @author helenas
  */
 public class Importador {
+    
+     private Lancamento lancamento; 
+    public Importador(Lancamento pais) {
+        this.lancamento = lancamento; 
+    }
+    
+    public void carregarArquivo(File arquivo) throws FileNotFoundException{
+        try(Scanner sc = new Scanner(arquivo, "UTF-8")){  
+          
+            while(sc.hasNextLine()){
+                String linha = sc.nextLine();
+                String[] dados = linha.split(";");
+                
+                
+            }
+        }
+    }
     
 }

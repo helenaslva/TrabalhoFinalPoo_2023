@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -36,7 +37,9 @@ public class ControleFinanceiro {
     public void inlcuirReceita(Lancamento receita){
         if(receita instanceof Receita){
             this.lancamentos.add(receita);
-            this.setSaldo(this.getSaldo() + receita.getValor());
+            if(receita.getData().isAfter(LocalDate.now())){
+                this.setSaldo(this.getSaldo() + receita.getValor());
+            }
         }else{
             throw new IllegalArgumentException("O lançamento não é uma receita");
         }
@@ -45,7 +48,9 @@ public class ControleFinanceiro {
     public void incluirDespesa(Lancamento despesa){
         if(despesa instanceof Despesa){
             this.lancamentos.add(despesa);
-            this.setSaldo(this.getSaldo() - despesa.getValor());
+            if(despesa.getData().isAfter(LocalDate.now())){
+                  this.setSaldo(this.getSaldo() - despesa.getValor());
+            }
         }else{
             throw new IllegalArgumentException("O lançamento não é uma despesa");
         }
