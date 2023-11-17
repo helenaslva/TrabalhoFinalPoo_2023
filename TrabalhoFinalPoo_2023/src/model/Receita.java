@@ -11,6 +11,8 @@ import java.time.LocalDate;
  * @author helenas
  */
 public class Receita extends Lancamento{
+
+    
     TipoReceita tipoReceita; 
 
     public TipoReceita getTipoReceita() {

@@ -4,12 +4,16 @@
  */
 package view;
 
+import java.time.LocalDate;
+import model.Receita;
+import model.TipoReceita;
+
 /**
  *
  * @author helenas
  */
 public class IncluirReceitaUi extends javax.swing.JDialog {
-
+    Receita receita;
     /**
      * Creates new form IncluirReceitaUi
      */
@@ -38,6 +42,7 @@ public class IncluirReceitaUi extends javax.swing.JDialog {
         rbDecimoTerceiro = new javax.swing.JRadioButton();
         rbFerias = new javax.swing.JRadioButton();
         rbOutrasReceitas = new javax.swing.JRadioButton();
+        btConfirmarReceita = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -75,6 +80,13 @@ public class IncluirReceitaUi extends javax.swing.JDialog {
             }
         });
 
+        btConfirmarReceita.setText("Confirmar");
+        btConfirmarReceita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btConfirmarReceitaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -82,7 +94,7 @@ public class IncluirReceitaUi extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel1)
                             .addGap(18, 18, 18)
@@ -91,15 +103,20 @@ public class IncluirReceitaUi extends javax.swing.JDialog {
                             .addComponent(jLabel3)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(tfDataReceita))
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rbDecimoTerceiro)
-                            .addComponent(rbSalario)
-                            .addComponent(rbFerias)
-                            .addComponent(rbOutrasReceitas))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel2)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(28, 28, 28)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(rbDecimoTerceiro)
+                                .addComponent(rbSalario)
+                                .addComponent(rbFerias)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(rbOutrasReceitas)
+                                    .addGap(33, 33, 33)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btConfirmarReceita)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,7 +139,8 @@ public class IncluirReceitaUi extends javax.swing.JDialog {
                 .addComponent(rbFerias)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rbOutrasReceitas)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btConfirmarReceita))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -152,6 +170,25 @@ public class IncluirReceitaUi extends javax.swing.JDialog {
     private void rbOutrasReceitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbOutrasReceitasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rbOutrasReceitasActionPerformed
+
+    private void btConfirmarReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmarReceitaActionPerformed
+        Double valorReceita = Double.parseDouble(tfValorReceita.getText());
+        LocalDate data = LocalDate.parse(tfDataReceita.getText());
+        String tipo = "";
+        if(rbSalario.isSelected()){
+            tipo = "SALARIO";
+        }else if(rbDecimoTerceiro.isSelected()){
+            tipo = "DECIMO_TERCEIRO";
+        }else if(rbFerias.isSelected()){
+            tipo = "FERIAS";
+        }else if(rbOutrasReceitas.isSelected()){
+            tipo = "OUTRAS_RECEITAS";
+        }
+        
+        receita = new Receita(valorReceita, data, TipoReceita.valueOf(tipo));
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_btConfirmarReceitaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -194,9 +231,14 @@ public class IncluirReceitaUi extends javax.swing.JDialog {
             }
         });
     }
+    
+    public Receita getReceita(){
+        return receita;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bgTipoReceita;
+    private javax.swing.JButton btConfirmarReceita;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

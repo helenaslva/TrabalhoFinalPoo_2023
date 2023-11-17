@@ -4,13 +4,16 @@
  */
 package model;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -48,7 +51,7 @@ public class ControleFinanceiro {
             if (receita.getData().isBefore(LocalDate.now())) {
                 this.setSaldo(this.getSaldo() + receita.getValor());
             }
-           // atualizarArquivoCSV();
+            atualizarArquivoCSV();
         } else {
             throw new IllegalArgumentException("O lançamento não é uma receita");
         }
@@ -56,12 +59,12 @@ public class ControleFinanceiro {
 
     public void incluirDespesa(Lancamento despesa) throws IOException {
         if (despesa instanceof Despesa) {
-           
+
             this.lancamentos.add(despesa);
             if (despesa.getData().isBefore(LocalDate.now())) {
                 this.setSaldo(this.getSaldo() - despesa.getValor());
             }
-            // atualizarArquivoCSV();
+            atualizarArquivoCSV();
         } else {
             throw new IllegalArgumentException("O lançamento não é uma despesa");
         }
@@ -87,18 +90,23 @@ public class ControleFinanceiro {
         return despesas;
     }
 
-   /* public void atualizarArquivoCSV() throws FileNotFoundException, IOException {
+    public ArrayList<Lancamento> listarLancamentosPorData() {
+        ArrayList<Lancamento> lancamentosOrdenados = new ArrayList(lancamentos);
+        Collections.sort(lancamentosOrdenados, new OrdenacaoPorData());
+        return lancamentosOrdenados;
+
+    }
+
+    public void atualizarArquivoCSV() throws FileNotFoundException, IOException {
         try (PrintWriter write = new PrintWriter(new FileWriter("C:\\Users\\helenas\\Downloads\\teste.csv"), true)) {
-            for(Lancamento l: lancamentos){
-                  String linha =l.getTipoLancamento() + "," + l.getData() + "," + l.getValor() + "," + l.getTipo();
-                  write.println(linha);
-       
-          
+            String linha = "";
+            for (Lancamento l : lancamentos) {
+                linha += l.getTipoLancamento() + "," + l.getData() + "," + l.getValor() + "," + l.getTipo() + "\n";
             }
-          
-           
+            write.println(linha);
+
         }
 
-    }*/
-}
+    }
 
+}

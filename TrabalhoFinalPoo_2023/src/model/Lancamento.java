@@ -13,6 +13,9 @@ import java.util.Date;
  */
 public abstract class Lancamento {
 
+    public Lancamento() {
+    }
+
     public Lancamento(double valor, LocalDate data) {
         this.valor = valor;
         this.data = data;

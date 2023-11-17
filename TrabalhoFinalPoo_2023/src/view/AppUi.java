@@ -6,10 +6,14 @@ package view;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.ControleFinanceiro;
 import model.Importador;
+import model.Lancamento;
+import model.Receita;
+import model.TipoReceita;
 
 /**
  *
@@ -214,11 +218,26 @@ public class AppUi extends javax.swing.JFrame {
     private void btIncluirReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIncluirReceitaActionPerformed
        IncluirReceitaUi incluirReceita = new IncluirReceitaUi(this, true);
        incluirReceita.setVisible(true);
+       
+       Receita receita = new Receita(0.0, LocalDate.of(2000, 8, 4), TipoReceita.DECIMO_TERCEIRO);
+       receita = incluirReceita.getReceita();
+       
+            try {
+                cf.inlcuirReceita(receita);
+            } catch (IOException ex) {
+                Logger.getLogger(AppUi.class.getName()).log(Level.SEVERE, null, ex);
+            }
+       
+      
+              
     }//GEN-LAST:event_btIncluirReceitaActionPerformed
 
     private void btListarLancamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btListarLancamentosActionPerformed
         ListarLancamentosUi listarLancamentos = new ListarLancamentosUi(this, true);
+        listarLancamentos.listarLancamentos(cf);
         listarLancamentos.setVisible(true);
+        
+        
     }//GEN-LAST:event_btListarLancamentosActionPerformed
 
     private void btIncluirDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIncluirDespesaActionPerformed

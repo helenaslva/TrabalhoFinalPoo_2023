@@ -7,6 +7,7 @@ package model;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
@@ -23,10 +24,17 @@ public class TrabalhoFinalPoo_2023 {
         Importador importador = new Importador(cf);
         importador.carregarArquivo(new File("C:\\Users\\helenas\\Downloads\\teste.csv"));
         
-        System.out.println(cf.listarDespesas());
-        
-   
-   
+        Despesa despesa = new Despesa(98.3, LocalDate.of(2025, 03, 12), TipoDespesa.EDUCACAO);
+        cf.incluirDespesa(despesa);
+       
+         
+       cf.listarReceitas();
+
+        System.out.println(cf.listarLancamentosPorData());       
+       
+       
+      
+                
 
 
     }

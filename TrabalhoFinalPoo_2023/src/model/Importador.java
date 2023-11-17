@@ -27,7 +27,8 @@ public class Importador {
           
             while(sc.hasNextLine()){
                 String linha = sc.nextLine();
-                String[] dados = linha.split(",");
+                if(!linha.equals("")){
+                    String[] dados = linha.split(",");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 
                 if(dados[0].equals("Despesa")){
@@ -37,6 +38,8 @@ public class Importador {
                     Receita novaReceita =  new Receita(Double.parseDouble(dados[2]), LocalDate.parse(dados[1], formatter), TipoReceita.valueOf(dados[3]));
                     controleFinanceiro.inlcuirReceita(novaReceita);
                 }
+                }
+                
                 
                 
             }

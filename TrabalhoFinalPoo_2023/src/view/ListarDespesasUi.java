@@ -123,6 +123,7 @@ public class ListarDespesasUi extends javax.swing.JDialog {
     }
     
     public void listarDespesas(ControleFinanceiro cf){
+        taDespesas.setText("");
         taDespesas.append("******** DESPESAS ******\n");
         for(Lancamento d: cf.listarDespesas() ){
             taDespesas.append("Valor: R$ " + d.getValor() + "\n");
@@ -130,6 +131,7 @@ public class ListarDespesasUi extends javax.swing.JDialog {
             taDespesas.append("Tipo: " + d.getTipo() + "\n");
             taDespesas.append("\n");
         }
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
