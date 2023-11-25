@@ -4,14 +4,19 @@
  */
 package view;
 
+import java.text.DecimalFormat;
 import model.ControleFinanceiro;
+import model.Despesa;
 import model.Lancamento;
+import model.Receita;
 
 /**
  *
  * @author helenas
  */
 public class ListarLancamentosUi extends javax.swing.JDialog {
+    
+    DecimalFormat df = new DecimalFormat("0.00");
 
     /**
      * Creates new form ListarLancamentos
@@ -120,14 +125,21 @@ public class ListarLancamentosUi extends javax.swing.JDialog {
             }
         });
     }
-    
-    public void listarLancamentos(ControleFinanceiro cf){
+
+    public void listarLancamentos(ControleFinanceiro cf) {
+        double valorSaldo = 0;
         taLancamentos.setText("");
         taLancamentos.setText("******* EXTRATO *******" + "\n\n");
-        for(Lancamento l: cf.listarLancamentosPorData()){
+        for (Lancamento l : cf.listarLancamentosPorData()) {
             taLancamentos.append("Lançamento: " + "\n");
-            taLancamentos.append("     " + l.getData() + "\n");
-            taLancamentos.append("     " + l.getTipoLancamento() + "\n\n");
+            taLancamentos.append("     " + "Data: " + l.getData() + "\n");
+            taLancamentos.append("     " + "Tipo: " + l.getTipoLancamento() + "\n");
+            taLancamentos.append("     " + "Valor: R$" +df.format(l.getValor())+ "\n");
+            if (l instanceof Despesa) {
+                taLancamentos.append("     " + "Saldo: R$" + df.format(valorSaldo -= l.getValor()) + "\n\n");
+            } else if (l instanceof Receita) {
+                taLancamentos.append("     " + "Saldo: R$" + df.format(valorSaldo += l.getValor()) + "\n\n");
+            }
         }
     }
 

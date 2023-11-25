@@ -15,7 +15,7 @@ public class OrdenacaoPorData implements Comparator<Lancamento> {
 
     @Override
     public int compare(Lancamento l1, Lancamento l2) {
-      return l1.getData().compareTo(l2.getData());
+      return l2.getData().compareTo(l1.getData());
     }
 
     
