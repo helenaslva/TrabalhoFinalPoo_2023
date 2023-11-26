@@ -7,6 +7,7 @@ package model;
 /**
  *
  * @author helenas
+ * enum com categorias de despesa
  */
 public enum TipoDespesa {
     ALIMENTACAO, 

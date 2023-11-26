@@ -14,14 +14,22 @@ import java.util.Scanner;
 /**
  *
  * @author helenas
+ * Classe responsável por ler e importar os dados de um arquivo para um Controle Financeiro
  */
 public class Importador {
     
-     private ControleFinanceiro controleFinanceiro; 
+    private ControleFinanceiro controleFinanceiro; 
     public Importador(ControleFinanceiro controleFinanceiro) {
         this.controleFinanceiro = controleFinanceiro; 
     }
-    
+    /**
+     * Método responsável por carregar um arquivo e armazenar seus dados
+     * @param arquivo
+     * @throws FileNotFoundException
+     * @throws IOException 
+     * 
+     * 
+     */
     public void carregarArquivo(File arquivo) throws FileNotFoundException, IOException{
         try(Scanner sc = new Scanner(arquivo, "UTF-8")){  
           
@@ -38,10 +46,7 @@ public class Importador {
                     Receita novaReceita =  new Receita(Double.parseDouble(dados[2]), LocalDate.parse(dados[1], formatter), TipoReceita.valueOf(dados[3]));
                     controleFinanceiro.inlcuirReceita(novaReceita);
                 }
-                }
-                
-                
-                
+                }  
             }
         }
     }

@@ -8,10 +8,23 @@ import java.time.LocalDate;
 
 /**
  *
- * @author helenas
+ * @author helenas Classe que representa um Lançamento do tipo despesa
  */
 public class Despesa extends Lancamento {
-    TipoDespesa tipoDespesa; 
+
+    TipoDespesa tipoDespesa;
+
+    /**
+     * Construtor de uma classe que representa uma Despesa
+     *
+     * @param valor
+     * @param data
+     * @param tipoDespesa
+     */
+    public Despesa(double valor, LocalDate data, TipoDespesa tipoDespesa) {
+        super(valor, data);
+        this.tipoDespesa = tipoDespesa;
+    }
 
     public TipoDespesa getTipoDespesa() {
         return tipoDespesa;
@@ -19,11 +32,6 @@ public class Despesa extends Lancamento {
 
     public void setTipoDespesa(TipoDespesa tipoDespesa) {
         this.tipoDespesa = tipoDespesa;
-    }
-
-    public Despesa(double valor, LocalDate data, TipoDespesa tipoDespesa) {
-        super(valor, data);
-        this.tipoDespesa = tipoDespesa; 
     }
 
     @Override
@@ -36,6 +44,4 @@ public class Despesa extends Lancamento {
         return "Despesa";
     }
 
- 
-    
 }

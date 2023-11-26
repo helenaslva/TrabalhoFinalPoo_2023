@@ -9,6 +9,7 @@ import java.time.LocalDate;
 /**
  *
  * @author helenas
+ * Classe que representa um Lançamento do tipo receita
  */
 public class Receita extends Lancamento{
 
@@ -22,7 +23,12 @@ public class Receita extends Lancamento{
     public void setTipoReceita(TipoReceita tipoReceita) {
         this.tipoReceita = tipoReceita;
     }
-
+/**
+ * Construtor de uma classe que representa uma receita
+ * @param valor
+ * @param data
+ * @param tipoReceita 
+ */
     public Receita(double valor, LocalDate data, TipoReceita tipoReceita) {
         super(valor, data);
         this.tipoReceita = tipoReceita; 

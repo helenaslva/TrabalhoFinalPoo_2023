@@ -10,6 +10,8 @@ import java.util.Comparator;
 /**
  *
  * @author helenas
+ * Classe responsável pela ordenação por data dos lançamentos que implementa
+ * a interface Comparator
  */
 public class OrdenacaoPorData implements Comparator<Lancamento> {
 

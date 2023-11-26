@@ -4,12 +4,16 @@
  */
 package view;
 
+import java.time.LocalDate;
+import model.Despesa;
+import model.TipoDespesa;
+
 /**
  *
  * @author helenas
  */
 public class IncluirDespesaUi extends javax.swing.JDialog {
-
+    Despesa despesa;
     /**
      * Creates new form IncluirDespesaUi
      */
@@ -40,18 +44,21 @@ public class IncluirDespesaUi extends javax.swing.JDialog {
         rbSaude = new javax.swing.JRadioButton();
         rbEducacao = new javax.swing.JRadioButton();
         rbOutrasDespesas = new javax.swing.JRadioButton();
+        btConfirmarDespesa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Incluir receita"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Incluir despesas"));
 
         jLabel1.setText("Valor");
 
         jLabel2.setText("Tipo de despesa");
 
-        tfValorDespesa.setText("jTextField1");
-
-        tfDataDespesa.setText("jTextField3");
+        tfValorDespesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfValorDespesaActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Data: ");
 
@@ -99,23 +106,29 @@ public class IncluirDespesaUi extends javax.swing.JDialog {
             }
         });
 
+        btConfirmarDespesa.setText("Confirmar");
+        btConfirmarDespesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btConfirmarDespesaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(18, 18, 18)
-                            .addComponent(tfValorDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(tfDataDespesa))
-                        .addComponent(jLabel2))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(tfValorDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tfDataDespesa))
+                    .addComponent(jLabel2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,7 +138,10 @@ public class IncluirDespesaUi extends javax.swing.JDialog {
                             .addComponent(rbEntretenimento)
                             .addComponent(rbSaude)
                             .addComponent(rbEducacao)
-                            .addComponent(rbOutrasDespesas))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(rbOutrasDespesas)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btConfirmarDespesa)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -154,8 +170,10 @@ public class IncluirDespesaUi extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rbEducacao)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rbOutrasDespesas)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbOutrasDespesas)
+                    .addComponent(btConfirmarDespesa))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -202,6 +220,35 @@ public class IncluirDespesaUi extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbOutrasDespesasActionPerformed
 
+    private void btConfirmarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmarDespesaActionPerformed
+        Double valorDespesa = Double.parseDouble(tfValorDespesa.getText());
+        LocalDate data = LocalDate.parse(tfDataDespesa.getText());
+        String tipo = "";
+        if(rbAlimentacao.isSelected()){
+            tipo = "ALIMENTACAO";
+        }else if(rbTransporte.isSelected()){
+            tipo = "TRANSPORTE";
+        }else if(rbResidencia.isSelected()){
+            tipo = "RESIDENCIA";
+        }else if(rbEntretenimento.isSelected()){
+            tipo = "ENTRETENIMENTO";
+        }else if(rbSaude.isSelected()){
+            tipo = "SAUDE";
+        }else if(rbEducacao.isSelected()){
+            tipo = "EDUCACAO";
+        }else if(rbOutrasDespesas.isSelected()){
+            tipo = "OUTRAS_DESPESAS";
+        }
+        
+        despesa = new Despesa(valorDespesa, data, TipoDespesa.valueOf(tipo));
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_btConfirmarDespesaActionPerformed
+
+    private void tfValorDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfValorDespesaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfValorDespesaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -243,8 +290,13 @@ public class IncluirDespesaUi extends javax.swing.JDialog {
             }
         });
     }
+    
+    public Despesa getDespesa(){
+        return despesa;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btConfirmarDespesa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

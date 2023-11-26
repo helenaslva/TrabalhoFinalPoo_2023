@@ -10,8 +10,11 @@ import java.util.Date;
 /**
  *
  * @author helenas
+ * Classe que representa um lançamento.
  */
 public abstract class Lancamento {
+    private LocalDate data;
+     private double valor;
 
     public Lancamento() {
     }
@@ -20,7 +23,7 @@ public abstract class Lancamento {
         this.valor = valor;
         this.data = data;
     }
-    private double valor;
+   
 
     public double getValor() {
         return valor;
@@ -42,7 +45,7 @@ public abstract class Lancamento {
     public void setData(LocalDate data) {
         this.data = data;
     }
-    private LocalDate data;
+
     
     public abstract String getTipo();
     public abstract String getTipoLancamento();

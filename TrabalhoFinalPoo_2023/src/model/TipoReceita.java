@@ -7,6 +7,7 @@ package model;
 /**
  *
  * @author helenas
+ * Enum com categorias de receita
  */
 public enum TipoReceita {
     SALARIO, 

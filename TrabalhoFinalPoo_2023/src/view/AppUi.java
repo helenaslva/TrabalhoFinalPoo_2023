@@ -10,9 +10,11 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.ControleFinanceiro;
+import model.Despesa;
 import model.Importador;
 import model.Lancamento;
 import model.Receita;
+import model.TipoDespesa;
 import model.TipoReceita;
 
 /**
@@ -66,7 +68,7 @@ public class AppUi extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Conta"));
 
         jLabel1.setText("Titular:");
@@ -243,6 +245,14 @@ public class AppUi extends javax.swing.JFrame {
     private void btIncluirDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIncluirDespesaActionPerformed
       IncluirDespesaUi incluirDespesa = new IncluirDespesaUi(this, true);
       incluirDespesa.setVisible(true);
+      
+       Despesa despesa = new Despesa(0.0, LocalDate.of(2000, 8, 4), TipoDespesa.SAUDE);
+       despesa = incluirDespesa.getDespesa();
+        try {
+                cf.incluirDespesa(despesa);
+            } catch (IOException ex) {
+                Logger.getLogger(AppUi.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }//GEN-LAST:event_btIncluirDespesaActionPerformed
 
     private void btListarReceitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btListarReceitasActionPerformed
